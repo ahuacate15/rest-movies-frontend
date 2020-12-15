@@ -1,8 +1,7 @@
 function getMoviesAjax(filters) {
-    console.log('dentro de movies');
     return new Promise((resolve, reject) => {
         $.ajax({
-            url : 'http://localhost:8080/movie',
+            url : URL_API + '/movie',
             data : `search=${filters.search}&sortBy=${filters.sortBy}&page=${filters.page == null ? 0 : filters.page}` ,
             success: function(data) {
                 resolve(data);

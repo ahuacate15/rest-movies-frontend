@@ -1,0 +1,12 @@
+.movie-container {
+margin-top: 20px !important;
+}
+.movie-image {
+width : 200px;
+height : auto;
+float: left !important;
+}
+.movie-detail {
+float: left !important;
+margin-left: 15px;
+}
