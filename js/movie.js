@@ -14,10 +14,7 @@ function getMoviesAjax(filters) {
 }
 
 function saveMovieAjax(data) {
-    console.log('dentro de ajax');
-    console.log('antes de jwt');
     var jwt = localStorage.getItem('jwt');
-    console.log('despues de jwt');
     var formData = new FormData();
     formData.append('title', data.title);
     formData.append('description', data.description);

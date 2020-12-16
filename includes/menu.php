@@ -25,6 +25,9 @@
                     </ul>
                 </li>
             </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="changeUser.php">Usuarios</a></li>
+            </ul>
         </div>
     </div>
 </nav>

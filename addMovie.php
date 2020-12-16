@@ -64,6 +64,8 @@
     </body>
 
     <script type="text/javascript">
+        verifySession();
+        
         function saveMovie() {
             console.log('salvando');
             var title = $("#tTitle").val();
