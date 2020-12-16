@@ -48,6 +48,7 @@
             }).then(data => {
                 localStorage.setItem('userName', data.userName);
                 localStorage.setItem('jwt', data.jwt);
+                localStorage.setItem('role', data.role);
                 location.href = "dashboard.php";
             }).catch(err => {
                 $("#message").addClass("alert-warning");

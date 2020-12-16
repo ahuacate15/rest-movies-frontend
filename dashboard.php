@@ -22,7 +22,7 @@
 					</select>
 				</div>
 				<button type="button" class="btn btn-default" id="bSearchMovie">Buscar</button>
-				<a href="#" class="btn btn-link">Ir al carrito (0)</a>
+				<a href="#" class="btn btn-link" id="lCarrito">Ir al carrito (0)</a>
                 <div class="pull-right">
                 <span id="pagination"></span>
                 <button type="button" class="btn btn-link" id="bBefore">Anterior</button>
@@ -41,19 +41,64 @@
 	<script type="text/javascript">
 		verifySession();
 
-		$(document).ready(function() {
-			let currentPage = 0;
+		var carrito = new Map();
+		var listMovies = new Map();
+
+		function addToCart(idMovie) {
+
+			if(carrito.get(idMovie)) {
+				carrito.delete(idMovie);
+				$("#btn-add-cart-" + idMovie).html("Agregar al carrito");
+			} else {
+				carrito.set(idMovie, 1);
+				$("#btn-add-cart-" + idMovie).html("Eliminar al carrito");
+			}
+
+
+			$("#lCarrito").html("Ir al carrito ("+ carrito.size +")");
+			localStorage.setItem('carrito', listMovies.get(idMovie));
+		}
+
+		function likeMovie(idMovie) {
+			$("#menu-movie-" + idMovie).html("Procesando...");
+			likeMovieAjax(idMovie)
+				.then(data => {
+
+					loadDefaultSearch();
+				}).catch(err => {
+					console.log('err', err);
+				});
+		}
+
+		function deleteMovie(idMovie) {
+			$("#menu-movie-" + idMovie).html("Eliminando...");
+			deleteMovieAjax(idMovie)
+			.then(data => {
+
+				loadDefaultSearch();
+			}).catch(err => {
+				console.log('err', err);
+			});
+		}
+
+		function loadDefaultSearch() {
 			getMoviesAjax({ search : '', sortBy : 'title' }).then(data => {
 				currentPage = data.currentPage;
 				$("#pagination").html(data.minCurrentValue + ' - ' + data.maxCurrentValue + ' de ' + data.totalRows);
 				$("#movie-list").html("");
 				$.each(data.listMovies, function(index, value) {
-					var html = generateDivMovie(value);
+					var html = generateDivMovieAuth(value);
 					$("#movie-list").append(html);
+					listMovies.set(value.idMovie, value);
 				});
 			}).catch(err => {
 				console.log('movies err', err);
 			});
+		}
+		$(document).ready(function() {
+			let currentPage = 0;
+
+			loadDefaultSearch();
 
 			$("#bSearchMovie").click(function(){
 				var title = $("#tTitle").val();
@@ -63,8 +108,9 @@
 				getMoviesAjax({ search : title, sortBy : orderBy }).then(data => {
 					$("#pagination").html(data.minCurrentValue + ' - ' + data.maxCurrentValue + ' de ' + data.totalRows);
 					$.each(data.listMovies, function(index, value) {
-						var html = generateDivMovie(value);
+						var html = generateDivMovieAuth(value);
 						$("#movie-list").append(html);
+						listMovies.set(value.idMovie, value);
 					});
 				}).catch(err => {
 					console.log('movies err', err);
@@ -81,8 +127,9 @@
 					console.log('next data', data);
 					$("#pagination").html(data.minCurrentValue + ' - ' + data.maxCurrentValue + ' de ' + data.totalRows);
 					$.each(data.listMovies, function(index, value) {
-						var html = generateDivMovie(value);
+						var html = generateDivMovieAuth(value);
 						$("#movie-list").append(html);
+						listMovies.set(value.idMovie, value);
 					});
 				}).catch(err => {
 					console.log('movies err', err);
@@ -98,7 +145,7 @@
 					console.log('next data', data);
 					$("#pagination").html(data.minCurrentValue + ' - ' + data.maxCurrentValue + ' de ' + data.totalRows);
 					$.each(data.listMovies, function(index, value) {
-						var html = generateDivMovie(value);
+						var html = generateDivMovieAuth(value);
 						$("#movie-list").append(html);
 					});
 				}).catch(err => {
