@@ -28,6 +28,12 @@ function verifySession() {
     }
 }
 
+function verifySessionIsActive() {
+    if(localStorage.getItem('jwt') != null) {
+        location.href = "dashboard.php";
+    }
+}
+
 function registerAjax(data) {
     return new Promise((resolve, reject) => {
         $.ajax({

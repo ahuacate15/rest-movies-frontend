@@ -4,6 +4,7 @@
         <title>Iniciar sesión</title>
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
     </head>
     <body>
         <div class="row justify-content-center" style="margin-top: 30px;">
@@ -58,8 +59,6 @@
                 } else {
                     $("#message").html("Error al iniciar sesión");
                 }
-
-
             });
 
 
