@@ -227,6 +227,56 @@ function generateDivMovieCart(value, action) {
     return div;
 }
 
+function generateDivMovieRentOrSales(value, action) {
+    var image = value.listImage[0] == null ? '../images/default-movie.png' : value.listImage[0].imageUrl;
+
+    var div =
+        `<div class="row" style="margin-top: 15px">`+
+        `    <div class="col-md-2">`+
+        `    	<img src="${image}" class="img-thumbnail movie-image">`+
+        `    </div>`+
+        `    <div class="movie-detail col-md-9">`+
+        `    	<div>`+
+        `    		<h3 style="display: inline">${value.titleMovie}</h3> (${value.returnedDate == null ? "Pendiente" : "Entregada"})`+
+        `       </div>`+
+        `       <div>` +
+        `           <br />`+
+        `           <div class="form-group col-md-4">` +
+        `       		<label>${action == 'rent' ? 'Precio de renta:' : 'Precio de venta:'}</label>` +
+        `               <label class="form-control">$${action == 'rent' ? value.rentalPrice : value.salesPrice}</label>`+
+        `           </div>` +
+        `           <div class="form-group col-md-4">` +
+        `    		    <label>Cantidad:</label>` +
+        `               <label class="form-control">${value.quantity}</label>`+
+        `           </div>` +
+        `           <div class="form-group col-md-4">` +
+        `    		    <label>Fecha de renta:</label>` +
+        `               <label class="form-control">${value.rentedDate.substring(0, 10)}</label>`+
+        `           </div>` +
+        `           <div class="form-group col-md-4">` +
+        `    		    <label>Fecha estimada de entrega:</label>` +
+        `               <label class="form-control">${value.returnDate.substring(0, 10)}</label>`+
+        `           </div>` +
+        `           <div class="form-group col-md-4">` +
+        `    		    <label>Fecha de entrega:</label>` +
+        `               <label class="form-control">${value.returnedDate == null ? "-" : value.returnedDate.substring(0, 10)}</label>`+
+        `           </div>` +
+        `           <div class="form-group col-md-4">` +
+        `    		    <label>Penalizacion:</label>` +
+        `               <label class="form-control">$${value.amountPenalty == null ? 0 : value.amountPenalty}</label>`+
+        `           </div>` +
+        //boton de muestra para peliculas pendientes
+        (value.returnedDate == null ?
+        `           <div class="col-md-4">` +
+        `               <button id="btn-return-${value.idMovie}" type="button" class="btn btn-primary btn-block" onclick="returnMovie(${value.idMovie})">Devolver</button>` +
+        `           </div>` :
+        ``) +
+        `    	</div>`+
+        `    </div>`+
+        `</div>`;
+    return div;
+}
+
 function readURL(input, output) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();

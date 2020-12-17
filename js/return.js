@@ -1,9 +1,9 @@
-function rentMoviesAjax(detail) {
+function returnMoviesAjax(detail) {
     var jwt = localStorage.getItem('jwt');
 
     return new Promise((resolve, reject) => {
         $.ajax({
-            url : URL_API + '/movie/rented',
+            url : URL_API + '/movie/returned',
             type : 'POST',
             data : {
                 detail : detail
@@ -21,12 +21,12 @@ function rentMoviesAjax(detail) {
     });
 }
 
-function getRentedMoviesAjax() {
+function getReturnedMoviesAjax() {
     var jwt = localStorage.getItem('jwt');
 
     return new Promise((resolve, reject) => {
         $.ajax({
-            url : URL_API + '/movie/rented',
+            url : URL_API + '/movie/returned',
             type : 'GET',
             headers : {
                 'Authorization' : 'Bearer ' + jwt
@@ -40,5 +40,3 @@ function getRentedMoviesAjax() {
         });
     });
 }
-
-function getRentedMoviesAuthAjax() {}
