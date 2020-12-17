@@ -9,7 +9,7 @@
 		<?php include('includes/menu.php'); ?>
 		<div class="container">
 			<!-- filtros de busqueda -->
-			<form class="form-inline">
+			<div class="form-inline">
 				<div class="form-group">
 					<label for="email">Titulo:</label>
 					<input type="text" class="form-control" id="tTitle">
@@ -22,15 +22,14 @@
 					</select>
 				</div>
 				<button type="button" class="btn btn-default" id="bSearchMovie">Buscar</button>
-				<a href="#" class="btn btn-link" id="lCarrito">Ir al carrito (0)</a>
+				<a href="cart.php" class="btn btn-link" id="lCarrito">Ir al carrito (0)</a>
                 <div class="pull-right">
                 <span id="pagination"></span>
                 <button type="button" class="btn btn-link" id="bBefore">Anterior</button>
                 <button type="button" class="btn btn-link" id="bAfter">Siguiente</button>
                 </div>
-			</form>
-			<div class="movie-container" id="movie-list">
 			</div>
+			<div class="movie-container" id="movie-list"></div>
 		</div>
 	</body>
 
@@ -41,22 +40,25 @@
 	<script type="text/javascript">
 		verifySession();
 
-		var carrito = new Map();
+		var mapCarrito = new Map();
+		var listMoviesCarrito = [];
 		var listMovies = new Map();
 
 		function addToCart(idMovie) {
 
-			if(carrito.get(idMovie)) {
-				carrito.delete(idMovie);
+			if(mapCarrito.get(idMovie)) {
+				mapCarrito.delete(idMovie);
+				$("#menu-movie-" + idMovie).html('Opciones <span class="caret"></span>');
 				$("#btn-add-cart-" + idMovie).html("Agregar al carrito");
 			} else {
-				carrito.set(idMovie, 1);
+				listMoviesCarrito.push(listMovies.get(idMovie));
+				mapCarrito.set(idMovie, listMovies.get(idMovie));
+				$("#menu-movie-" + idMovie).html('(1) Opciones <span class="caret"></span>');
 				$("#btn-add-cart-" + idMovie).html("Eliminar al carrito");
 			}
 
-
-			$("#lCarrito").html("Ir al carrito ("+ carrito.size +")");
-			localStorage.setItem('carrito', listMovies.get(idMovie));
+			$("#lCarrito").html("Ir al carrito ("+ mapCarrito.size +")");
+			localStorage.setItem('listCarrito', JSON.stringify(listMoviesCarrito));
 		}
 
 		function likeMovie(idMovie) {
@@ -79,6 +81,10 @@
 			}).catch(err => {
 				console.log('err', err);
 			});
+		}
+
+		function openEditMovie(idMovie) {
+			location.href = "editMovie.php?idMovie=" + idMovie;
 		}
 
 		function loadDefaultSearch() {

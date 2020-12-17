@@ -6,7 +6,7 @@
         <?php include('includes/resources.html'); ?>
         <script src="js/constant.js" type="text/javascript"></script>
         <script src="js/auth.js" type="text/javascript"></script>
-        <script type="text/javascript" src="js/movie.js"></script>
+        <script src="js/movie.js" type="text/javascript" ></script>
     </head>
     <body>
         <?php include('includes/menu.php'); ?>
@@ -14,50 +14,56 @@
             <form class="form" id="form-movie">
                 <div class="alert alert-warning" role="alert" id="message" style="display: none;"></div>
                 <h2>Agregar pelicula</h2>
-                <div class="form-group">
-                    <label>Titulo</label>
-                    <input type="text" id="tTitle" class="form-control" />
+                <div class="col-md-2">
+                    <div>
+                        <img src="images/default-movie.png" style="width: 100%; height: auto" id="iMovie" />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Descripcion</label>
-                    <textarea class="form-control" id="tDescription"></textarea>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label>Precio de renta</label>
-                        <div class="input-group input-group-md">
-                            <span class="input-group-addon" id="sizing-addon1">$</span>
-                            <input type="number" id="tRentalPrice" class="form-control" aria-describedby="sizing-addon1">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label>Titulo</label>
+                        <input type="text" id="tTitle" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion</label>
+                        <textarea class="form-control" id="tDescription"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label>Precio de renta</label>
+                            <div class="input-group input-group-md">
+                                <span class="input-group-addon" id="sizing-addon1">$</span>
+                                <input type="number" id="tRentalPrice" class="form-control" aria-describedby="sizing-addon1">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>Precio de venta</label>
+                            <div class="input-group input-group-md">
+                                <span class="input-group-addon" id="sizing-addon1">$</span>
+                                <input type="number" id="tSalesPrice" class="form-control" aria-describedby="sizing-addon1">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>Numero de existencias</label>
+                            <input type="number" id="tStock" class="form-control" />
                         </div>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label>Precio de venta</label>
-                        <div class="input-group input-group-md">
-                            <span class="input-group-addon" id="sizing-addon1">$</span>
-                            <input type="number" id="tSalesPrice" class="form-control" aria-describedby="sizing-addon1">
-                        </div>
+                    <div class="checkbox form-group">
+                        <label>
+                            <input type="checkbox" id="cAvailability" /> pelicula disponible
+                        </label>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label>Numero de existencias</label>
-                        <input type="number" id="tStock" class="form-control" />
+                    <div class="form-group" style="margin-top: 15px">
+                        <label>Imagenes adjuntas</label>
+                        <input type="file" id="bImages" class="form-control-file" />
                     </div>
-                </div>
 
-                <div class="checkbox form-group">
-                   <label>
-                       <input type="checkbox" id="cAvailability" /> pelicula disponible
-                   </label>
-               </div>
-
-               <div class="form-group" style="margin-top: 15px">
-                     <label>Imagenes adjuntas</label>
-                     <input type="file" id="bImages" class="form-control-file" />
-                 </div>
-
-                 <button type="button" class="btn btn-primary" onclick="saveMovie()">Registrar pelicula</button>
-                 <a href="dashboard.php" class="btn btn-link">Regresar</a>
+                    <button id="bSave" type="button" class="btn btn-primary" onclick="saveMovie()">Registrar pelicula</button>
+                    <a href="dashboard.php" class="btn btn-link">Regresar</a>
                 </div>
             </form>
         </div>
@@ -65,9 +71,9 @@
 
     <script type="text/javascript">
         verifySession();
-        
+
         function saveMovie() {
-            console.log('salvando');
+            $("#bSave").html("Procesando...");
             var title = $("#tTitle").val();
             var description = $("#tDescription").val();
             var salesPrice = $("#tSalesPrice").val();
@@ -83,6 +89,7 @@
                 $("#message").addClass("alert-warning");
                 $("#message").css("display", "block");
                 $("#message").html("Debes agregar una imagen");
+                $("#bSave").html("Registrar pelicula");
                 return;
             }
 
@@ -100,6 +107,7 @@
                 $("#message").addClass("alert-success");
                 $("#message").css("display", "block");
                 $("#message").html("Pelicula registrada correctamente");
+                $("#bSave").html("Registrar pelicula");
             }).catch(err => {
                 $("#message").addClass("alert-danger");
                 $("#message").removeClass("alert-warning");
@@ -112,8 +120,16 @@
                     $("#message").html("Error al registrar la pelicula");
                 }
 
+                $("#bSave").html("Registrar pelicula");
+
             });
         }
+
+        $(document).ready(function(){
+            $("#bImages").change(function(){
+                readURL(this, '#iMovie');
+            });
+        });
 
     </script>
 </html>
