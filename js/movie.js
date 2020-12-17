@@ -1,8 +1,15 @@
 function getMoviesAjax(filters) {
+    var role = localStorage.getItem('role');
+    var headers = {};
+    if(role == 'ADMIN') {
+        var jwt = localStorage.getItem('jwt');
+        headers['Authorization'] = 'Bearer ' + jwt;
+    }
     return new Promise((resolve, reject) => {
         $.ajax({
-            url : URL_API + '/movie',
-            data : `search=${filters.search}&sortBy=${filters.sortBy}&page=${filters.page == null ? 0 : filters.page}` ,
+            url : URL_API + '/movie' + (role == 'ADMIN' ? '/auth' : ''),
+            data : `search=${filters.search}&sortBy=${filters.sortBy}&page=${filters.page == null ? 0 : filters.page}&filterBy=${filters.filterBy != null ? filters.filterBy : ''}` ,
+            headers : headers,
             success: function(data) {
                 resolve(data);
             },
@@ -185,9 +192,15 @@ function generateDivMovieAuth(value) {
         `                               ${mapCarrito.get(value.idMovie) ? "Eliminar del carrito" : "Agregar al carrito"}`+
         `                           </button>`+
         `                       </li>` +
+
         `                       <li><button class="btn btn-link" onclick="javascript:likeMovie(${value.idMovie})">Marcar favorito</button></li>` +
-        `                       <li><button class="btn btn-link" onclick="javascript:openEditMovie(${value.idMovie})">Modificar</a></li>` +
-        `                       <li><button class="btn btn-link" onclick="javascript:deleteMovie(${value.idMovie})">Eliminar</button></li>` +
+        (role == 'ADMIN' ?
+        `                       <li><button class="btn btn-link" onclick="javascript:openEditMovie(${value.idMovie})">Modificar</a></li>` : ``
+        ) +
+
+        (role == 'ADMIN' ?
+        `                       <li><button class="btn btn-link" onclick="javascript:deleteMovie(${value.idMovie})">Eliminar</button></li>` : ``
+        ) +
         `                   </ul>` +
         `               </li>` +
         `           </ul>` +
@@ -197,6 +210,9 @@ function generateDivMovieAuth(value) {
         `    		<label style="display: block">Precio de renta: $${value.rentalPrice}</label>`+
         `    		<label style="display: block">Precio de compra: $${value.salesPrice}</label>`+
         `    		<label style="display: block">Existencias: ${value.stock}</label>`+
+        (role == 'ADMIN' ?
+        `           <label style="display: block">Estado: ${value.availability ? "Disponible" : "No disponible"}</label>` : ``
+        )+
         `    		<p>${value.description}</p>`+
         `    	</div>`+
         `    </div>`+

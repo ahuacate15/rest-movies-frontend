@@ -25,6 +25,15 @@ function logout() {
 function verifySession() {
     if(localStorage.getItem('jwt') == null) {
         location.href = "index.php";
+    } else {
+        var userName = localStorage.getItem('userName');
+        var role = localStorage.getItem('role');
+        $("#user-name").html("@" +userName);
+
+        if(role != 'ADMIN') {
+            $("#menu-movies").remove();
+            $("#menu-user").remove();
+        }
     }
 }
 

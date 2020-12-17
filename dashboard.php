@@ -21,6 +21,14 @@
 						<option value="likes">Popularidad</option>
 					</select>
 				</div>
+				<div class="form-group" style="margin-left: 15px" id="filter-by">
+					<label for="email">Estado:</label>
+					<select class="form-control" id="sFilterBy">
+						<option value="all" selected>Todos</option>
+						<option selected value="availability">Disponible</option>
+						<option value="unavailability">No disponible</option>
+					</select>
+				</div>
 				<button type="button" class="btn btn-default" id="bSearchMovie">Buscar</button>
 				<a href="cart.php" class="btn btn-link" id="lCarrito">Ir al carrito (0)</a>
                 <div class="pull-right">
@@ -88,7 +96,8 @@
 		}
 
 		function loadDefaultSearch() {
-			getMoviesAjax({ search : '', sortBy : 'title' }).then(data => {
+			var filterBy = $("#sFilterBy").val();
+			getMoviesAjax({ search : '', sortBy : 'title', filterBy : filterBy }).then(data => {
 				currentPage = data.currentPage;
 				$("#pagination").html(data.minCurrentValue + ' - ' + data.maxCurrentValue + ' de ' + data.totalRows);
 				$("#movie-list").html("");
@@ -104,14 +113,21 @@
 		$(document).ready(function() {
 			let currentPage = 0;
 
+			//ocultar opcion para no admin
+			let role = localStorage.getItem('role');
+			if(role != 'ADMIN') {
+				$("#filter-by").hide();
+			}
+
 			loadDefaultSearch();
 
 			$("#bSearchMovie").click(function(){
 				var title = $("#tTitle").val();
 				var orderBy = $("#sOrderBy").val();
+				var filterBy = $("#sFilterBy").val();
 
 				$("#movie-list").html("");
-				getMoviesAjax({ search : title, sortBy : orderBy }).then(data => {
+				getMoviesAjax({ search : title, sortBy : orderBy, filterBy : filterBy }).then(data => {
 					$("#pagination").html(data.minCurrentValue + ' - ' + data.maxCurrentValue + ' de ' + data.totalRows);
 					$.each(data.listMovies, function(index, value) {
 						var html = generateDivMovieAuth(value);

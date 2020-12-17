@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="dashboard.php">Movies</a>
+            <a class="navbar-brand" href="dashboard.php" id="user-name">Movies</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
@@ -16,7 +16,7 @@
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" id="menu-movies">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Peliculas <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -24,7 +24,7 @@
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" id="menu-user">
                 <li><a href="changeUser.php">Usuarios</a></li>
             </ul>
         </div>
