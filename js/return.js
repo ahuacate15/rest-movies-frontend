@@ -26,7 +26,7 @@ function getReturnedMoviesAjax() {
 
     return new Promise((resolve, reject) => {
         $.ajax({
-            url : URL_API + '/movie/returned',
+            url : URL_API + '/movie/returned/user',
             type : 'GET',
             headers : {
                 'Authorization' : 'Bearer ' + jwt

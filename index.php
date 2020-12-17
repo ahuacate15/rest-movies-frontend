@@ -104,7 +104,7 @@
 					<label for="email">Titulo:</label>
 					<input type="text" class="form-control" id="tTitle">
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-left: 15px">
 					<label for="email">Ordenar por:</label>
 					<select class="form-control" id="sOrderBy">
 						<option selected value="title">Titulo</option>

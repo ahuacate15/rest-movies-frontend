@@ -277,6 +277,38 @@ function generateDivMovieRentOrSales(value, action) {
     return div;
 }
 
+function generateDivMovieSold(value) {
+    var image = value.listImage[0] == null ? '../images/default-movie.png' : value.listImage[0].imageUrl;
+
+    var div =
+        `<div class="row" style="margin-top: 15px">`+
+        `    <div class="col-md-2">`+
+        `    	<img src="${image}" class="img-thumbnail movie-image">`+
+        `    </div>`+
+        `    <div class="movie-detail col-md-9">`+
+        `    	<div>`+
+        `    		<h3 style="display: inline">${value.titleMovie}</h3>`+
+        `       </div>`+
+        `       <div>` +
+        `           <br />`+
+        `           <div class="form-group">` +
+        `       		<label>Precio de venta:</label>` +
+        `               <label class="form-control">$${value.soldPrice}</label>`+
+        `           </div>` +
+        `           <div class="form-group">` +
+        `    		    <label>Cantidad:</label>` +
+        `               <label class="form-control">${value.quantity}</label>`+
+        `           </div>` +
+        `           <div class="form-group">` +
+        `    		    <label>Fecha de renta:</label>` +
+        `               <label class="form-control">${value.soldDate.substring(0, 10)}</label>`+
+        `           </div>` +
+        `    	</div>`+
+        `    </div>`+
+        `</div>`;
+    return div;
+}
+
 function readURL(input, output) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();

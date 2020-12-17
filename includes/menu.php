@@ -12,7 +12,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rentas <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="myRentList.php">Mis peliculas rentadas</a></li>
-                        <li><a href="#">Mis peliculas compradas</a></li>
+                        <li><a href="mySoldList.php">Mis peliculas compradas</a></li>
                     </ul>
                 </li>
             </ul>
