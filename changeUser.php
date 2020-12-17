@@ -41,7 +41,7 @@
                         `       </select>` +
                         `   </td>` +
                         `   <td>` +
-                        `       <button class="btn btn-info" onclick="updateRole(${value.idUser})">Guardar</button>` +
+                        `       <button class="btn btn-default" onclick="updateRole(${value.idUser})">Guardar</button>` +
                         `   </td>` +
                         `</tr>`;
                     $("#tbUsers>tbody").append(html);
